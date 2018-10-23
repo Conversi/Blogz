@@ -31,22 +31,24 @@ def validate_blog():
         blog_title = request.form['blog_title']
         post_error = ''
         title_error =''
+        
+        if not blog_post:
+            post_error = 'May not leave blank'
+
+        if not blog_title:
+            title_error = 'May not leave blank'
+
+        if not blog_post or not blog_title:
+            return render_template('newpost.html', title='Build-A-Blog', blog_post=blog_post,
+            blog_title=blog_title, post_error=post_error, title_error=title_error, list_blog=list_blog)
+    
         new_blog = Blog(blog_title, blog_post)
         db.session.add(new_blog)        
         db.session.commit()
-        # return redirect ('/blog')
-        if blog_post == '':
-            post_error = 'May not leave blank'
-    
-        if blog_title == '':
-            title_error = 'May not leave blank'
-
-        if blog_post == '' or blog_title == '':
-            return render_template('newpost.html', title='Build-A-Blog', blog_post=blog_post,
-            blog_title=blog_title, post_error=post_error, title_error=title_error, list_blog=list_blog)
         return redirect ('/blog')
-    return render_template ('newpost.html', list_blog=list_blog)
 
+    return render_template ('newpost.html', list_blog=list_blog)
+    
 @app.route('/', methods=['POST', 'GET'])
 def index():
     return redirect ('/blog')
