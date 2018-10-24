@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, render_template
+from flask import Flask, request, redirect, render_template, session
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -48,7 +48,19 @@ def validate_blog():
         return redirect ('/blog')
 
     return render_template ('newpost.html', list_blog=list_blog)
-    
+
+@app.route('/single_blog')
+def solo():
+    blog_title = request.args.get('id')
+    # blog_post = request.args.get('id')
+    # query = db.session.query(Blog.blog_title, Blog.blog_post)
+    # query = Blog.query.with_entities(Blog.blog_title, Blog.blog_post)
+    query = Blog.query.get(blog_title).blog_title
+    print ('xxxxxxxxxxxxxx', query, 'xxxxxxxxxxxxxxxx')
+    return render_template ('/single_blog.html', blog_title=blog_title, blog_post=blog_post)
+    # blog_title = request.form['blog_title']
+    # return render_template ('/single_blog?id={query}', query=query, blog_title=blog_title)
+
 @app.route('/', methods=['POST', 'GET'])
 def index():
     return redirect ('/blog')
