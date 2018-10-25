@@ -49,17 +49,13 @@ def validate_blog():
 
     return render_template ('newpost.html', list_blog=list_blog)
 
-@app.route('/single_blog')
+@app.route('/single_blog', methods=['GET'])
 def solo():
-    blog_title = request.args.get('id')
-    # blog_post = request.args.get('id')
-    # query = db.session.query(Blog.blog_title, Blog.blog_post)
-    # query = Blog.query.with_entities(Blog.blog_title, Blog.blog_post)
-    query = Blog.query.get(blog_title).blog_title
-    print ('xxxxxxxxxxxxxx', query, 'xxxxxxxxxxxxxxxx')
-    return render_template ('/single_blog.html', blog_title=blog_title, blog_post=blog_post)
-    # blog_title = request.form['blog_title']
-    # return render_template ('/single_blog?id={query}', query=query, blog_title=blog_title)
+    blog_id = request.args.get('id')
+    query_title = Blog.query.get(blog_id).blog_title
+    query_post = Blog.query.get(blog_id).blog_post
+    # print ('xxxxxxxxxxxxxx', query, 'xxxxxxxxxxxxxxxx')
+    return render_template ('single_blog.html', query_title=query_title, query_post=query_post)
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
