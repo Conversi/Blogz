@@ -38,7 +38,7 @@ class User(db.Model):
 @app.before_request
 def require_login():
     allowed_routes = ['login', 'list_blogs', 'index', 'signup']
-    if request.endpoint not in allowed_routes and 'username' not in session and not request.path.startswith('/static/'):
+    if request.endpoint not in allowed_routes and 'username' not in session:
         return redirect('/login')
 
 @app.route('/blog', methods=['POST', 'GET'])
@@ -69,23 +69,23 @@ def login():
         if not username and not password:
             username_error = "Username invalid"
             password_error = "Password invalid"
-            return render_template('login.html', username_error = username_error, password_error = password_error)
+            return render_template('login.html', username_error=username_error, password_error=password_error)
         if not password:
             password_error = "Password invalid"
-            return render_template('login.html', password_error = password_error, username = username)
+            return render_template('login.html', password_error=password_error, username=username)
         if not username:
             username_error = "Username invalid"
-            return render_template('login.html', username_error = username_error)
+            return render_template('login.html', username_error=username_error)
 
         if user and check_password(password, user.password):
             session['username'] = username
             return redirect('/newpost')
         if user and not user.password == password:
             password_error = "Password invalid"
-            return render_template('login.html', password_error = password_error, username = username)
+            return render_template('login.html', password_error=password_error, username=username)
         if not user:
             username_error = "Username invalid"
-            return render_template('login.html', username_error = username_error)
+            return render_template('login.html', username_error=username_error)
     else:
         return render_template('login.html')
 
@@ -104,23 +104,23 @@ def signup():
         
         if not username or not password or not verify:
             username_error = "Username required."
-            return render_template('signup.html', username_error = username_error)
+            return render_template('signup.html', username_error=username_error)
         
         if len(username) < 3:
             username_error = "Invalid username. Must be at least three characters."
-            return render_template('signup.html', username_error = username_error)
+            return render_template('signup.html', username_error=username_error)
         if len(password) < 3:
             password_error = "Invalid password. Must be at least three characters."
-            return render_template('signup.html', password_error = password_error, username = username)
+            return render_template('signup.html', password_error=password_error, username=username)
 
         if existing_user:
             username_error = "Username already exists."
-            return render_template('signup.html', username_error = username_error)
+            return render_template('signup.html', username_error=username_error)
 
         if not existing_user and not password==verify:
             password_error = "Passwords do not match"
             verify_error = "Passwords do not match"
-            return render_template('signup.html', username = username, password_error = password_error, verify_error = verify_error)
+            return render_template('signup.html', username=username, password_error=password_error, verify_error=verify_error)
 
         if not existing_user and password==verify:
             new_user = User(username, password)
