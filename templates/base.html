@@ -1,23 +1,22 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
     <nav>
-        <a href="/blog">Main Blog Page</a>
-        <a href="/newpost">Add a Blog Entry</a>
+        <a href="/">home</a>&emsp;
+        <a href="/blog">all posts</a>&emsp;
+        <a href="/newpost">new post</a>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+        <a href="/login">login</a>&emsp;
+        <a href="/logout">logout</a>
     </nav>
     <head>
-        <title>{{title}}</title>
     </head>
     <style>
-        .error {
-            color: red;
-        }
-        blue {
-            color: blue
-        }
+            .error {
+                color: red;
+            }
     </style>
-<body>
+    <body>
+        {% block content %}
 
-    {% block content %}
-    {% endblock %}
-</body>
+        {% endblock %}
+    </body>
 </html>

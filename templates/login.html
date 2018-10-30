@@ -1,23 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Log in</h1>
-<p>If you don't have an account, you may <a href="/register">register</a> for one</p>
+<h2>Login</h2>
+
 <form action="/login" method="post">
-    <table>
-        <tr>
-            <td><label for="email">Email</label></td>
-            <td>
-                <input name="email" type="email" value="{{ email }}">
-            </td>
-        </tr>
-        <tr>
-            <td><label for="password">Password</label></td>
-            <td>
-                <input name="password" type="password">
-            </td>
-        </tr>
-    </table>
-    <input type="submit" value="Login">
+        
+    <label for="username">Username:</label>
+    <input id="username" type="text" name="username" value='{{username}}'/>
+    <span class="error">{{username_error}}</span>
+    
+    <br>
+    <label for="Password">Password:</label>
+    <input id="Password" type="password" name="Password" />
+    <span class="error">{{password_error}}</span>
+    
+    <br>
+    <input class="submit" type="submit"/>
 </form>
+<p>
+    "Dont have an account? " <a href="/signup">Create one!</a>
+</p>
 {% endblock %}
